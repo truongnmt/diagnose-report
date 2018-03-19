@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Diagnose Report</string>
+    <string name="title_activity_profile2">ProfileActivity2</string>
 </resources>
