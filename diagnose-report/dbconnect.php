@@ -1,13 +1,12 @@
-<?
+<?php
 //these are the server details
 //the username is root by default in case of xampp
 //password is nothing by default
 //and lastly we have the database named android. if your database name is different you have to change it
-$servername = "localhost:8889";
+$servername = "localhost";
 $username = "root";
-$password = "root";
+$password = "truongke";
 $database = "android";
-
 
 //creating a new connection object using mysqli
 $conn = new mysqli($servername, $username, $password, $database);
