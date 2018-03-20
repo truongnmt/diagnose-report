@@ -6,9 +6,26 @@
     android:layout_height="match_parent"
     tools:context="net.simplifiedlearning.simplifiedcoding.UploadImagesActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Upload images activities"/>
+        <Button
+            android:id="@+id/button_select_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClickBtn"
+            android:text="Select Image"/>
+
+
+        <TextView
+            android:id="@+id/text_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="Input"/>
+
+        <TextView
+            android:id="@+id/text_result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="Result"/>
 
 </android.support.constraint.ConstraintLayout>
