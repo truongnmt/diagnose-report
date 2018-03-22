@@ -10,6 +10,6 @@ public class URLs {
 
     public static final String URL_REGISTER = ROOT_URL + "api.php?apicall=signup";
     public static final String URL_LOGIN = ROOT_URL + "api.php?apicall=login";
-    public static final String URL_UPLOAD = ROOT_URL + "upload.php";
+    public static final String URL_UPLOAD = ROOT_URL + "upload.php/";
 
 }

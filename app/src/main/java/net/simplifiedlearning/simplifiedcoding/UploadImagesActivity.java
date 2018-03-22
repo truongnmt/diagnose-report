@@ -1,17 +1,22 @@
 package net.simplifiedlearning.simplifiedcoding;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.ClipData;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,18 +42,22 @@ import static net.simplifiedlearning.simplifiedcoding.URLs.URL_UPLOAD;
 
 public class UploadImagesActivity extends AppCompatActivity {
     public final static int PICK_IMAGE_REQUEST = 1;
-    public final static int READ_EXTERNAL_REQUEST = 2;
+    public final static int STORAGE_PERMISSION_CODE = 123;
+    private static final String TAG = "";
     private ProgressDialog mProgressDialog;
     private TextView mTextResult;
     private TextView mTextInput;
     private List<Uri> mUris = new ArrayList<>();
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_images);
+        requestStoragePermission();
         mTextResult = (TextView) findViewById(R.id.text_result);
         mTextInput = (TextView) findViewById(R.id.text_input);
+        user = SharedPrefManager.getInstance(this).getUser();
     }
 
     public void onClickBtn(View view)
@@ -73,21 +82,21 @@ public class UploadImagesActivity extends AppCompatActivity {
         if (result == PackageManager.PERMISSION_GRANTED) {
             pickImage();
         }
-//        } else {
-//            requestPermissions(new String[]{
-//                    READ_EXTERNAL_STORAGE}, READ_EXTERNAL_REQUEST);
-//        }
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[],
-                                           int[] grantResults) {
-        if (requestCode != READ_EXTERNAL_REQUEST) return;
-        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            pickImage();
-        } else {
-            Toast.makeText(getApplicationContext(), "Permission denied.",
-                    Toast.LENGTH_LONG).show();
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == STORAGE_PERMISSION_CODE) {
+
+            //If permission is granted
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                //Displaying a toast
+                pickImage();
+                Toast.makeText(this, "Permission granted now you can read the storage", Toast.LENGTH_LONG).show();
+            } else {
+                //Displaying another toast if permission is not granted
+                Toast.makeText(this, "Oops you just denied the permission", Toast.LENGTH_LONG).show();
+            }
         }
     }
 
@@ -108,6 +117,7 @@ public class UploadImagesActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null &&
                 data.getClipData() != null) {
+
             ClipData clipData = data.getClipData();
             StringBuilder builder = new StringBuilder();
             for (int i = 0; i < clipData.getItemCount(); i++) {
@@ -126,18 +136,21 @@ public class UploadImagesActivity extends AppCompatActivity {
         }
     }
 
-    private String getRealPathFromURI(Uri contentURI) {
-        String result;
-        Cursor cursor = getContentResolver().query(contentURI, null, null, null, null);
-        if (cursor == null) {
-            result = contentURI.getPath();
-        } else {
-            cursor.moveToFirst();
-            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-            result = cursor.getString(idx);
-            cursor.close();
-        }
-        return result;
+    public String getRealPathFromURI(Uri uri) {
+        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+        cursor.moveToFirst();
+        String document_id = cursor.getString(0);
+        document_id = document_id.substring(document_id.lastIndexOf(":") + 1);
+        cursor.close();
+
+        cursor = getContentResolver().query(
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                null, MediaStore.Images.Media._ID + " = ? ", new String[]{document_id}, null);
+        cursor.moveToFirst();
+        String path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+        cursor.close();
+
+        return path;
     }
 
     public void uploadFiles() {
@@ -166,8 +179,16 @@ public class UploadImagesActivity extends AppCompatActivity {
                     MediaType.parse("image/*"),
                     file);
             // Add thêm request body vào trong builder
-            builder.addFormDataPart("uploaded_file", file.getName(), requestBody);
+            builder.addFormDataPart("images[]", file.getName(), requestBody);
         }
+        builder.addFormDataPart("name", "nha nghi");
+        builder.addFormDataPart("user_id", String.valueOf(user.getId()));
+
+//        RequestBody requestBody = RequestBody.create(
+//                MediaType.parse("text/plain"),
+//                "nha nghi"
+//        );
+//        draBody = RequestBody.create(MediaType.parse("text/plain"), requestBody.toString(1));
 
         MultipartBody requestBody = builder.build();
         UploadService service = retrofit.create(UploadService.class);
@@ -177,6 +198,7 @@ public class UploadImagesActivity extends AppCompatActivity {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response == null || response.body() == null) {
                     mTextResult.setText("Upload images failed!");
+                    dissmissDialog();
                     return;
                 }
                 try {
@@ -193,8 +215,6 @@ public class UploadImagesActivity extends AppCompatActivity {
                 mTextResult.setText("Upload images failed!");
                 dissmissDialog();
             }
-
-
         });
     }
 
@@ -208,5 +228,19 @@ public class UploadImagesActivity extends AppCompatActivity {
             mProgressDialog.setMessage("Uploading...");
         }
         mProgressDialog.show();
+    }
+
+    //Requesting permission
+    private void requestStoragePermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+            return;
+
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            //If the user has denied the permission previously your code will come to this block
+            //Here you can explain why you need this permission
+            //Explain here why you need this permission
+        }
+        //And finally ask for the permission
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
     }
 }

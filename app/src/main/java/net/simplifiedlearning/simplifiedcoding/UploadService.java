@@ -11,6 +11,6 @@ import retrofit2.http.POST;
  */
 
 public interface UploadService {
-    @POST("/")
+    @POST("/diagnose-report/upload.php")
     Call<ResponseBody> uploadFileMultilPart(@Body RequestBody files);
 }
