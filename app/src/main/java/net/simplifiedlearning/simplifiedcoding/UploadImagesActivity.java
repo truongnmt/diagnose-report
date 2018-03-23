@@ -3,10 +3,11 @@ package net.simplifiedlearning.simplifiedcoding;
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.ClipData;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
@@ -16,8 +17,9 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,15 +51,20 @@ public class UploadImagesActivity extends AppCompatActivity {
     private TextView mTextInput;
     private List<Uri> mUris = new ArrayList<>();
     private User user;
+    private GridView gridView;
+    private GridViewAdapter gridAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_images);
         requestStoragePermission();
+
         mTextResult = (TextView) findViewById(R.id.text_result);
         mTextInput = (TextView) findViewById(R.id.text_input);
         user = SharedPrefManager.getInstance(this).getUser();
+
+        gridView = (GridView) findViewById(R.id.uploadPreviewImage);
     }
 
     public void onClickBtn(View view)
@@ -87,24 +94,18 @@ public class UploadImagesActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == STORAGE_PERMISSION_CODE) {
-
-            //If permission is granted
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                //Displaying a toast
                 pickImage();
                 Toast.makeText(this, "Permission granted now you can read the storage", Toast.LENGTH_LONG).show();
             } else {
-                //Displaying another toast if permission is not granted
                 Toast.makeText(this, "Oops you just denied the permission", Toast.LENGTH_LONG).show();
             }
         }
     }
 
     public void pickImage() {
-        // Gọi intent của hệ thống để chọn ảnh nhé.
         Intent intent = new Intent();
         intent.setType("image/*");
-        // Thêm dòng này để có thể select nhiều ảnh trong 1 lần nhé các bạn
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Files to Upload"),
@@ -118,27 +119,60 @@ public class UploadImagesActivity extends AppCompatActivity {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null &&
                 data.getClipData() != null) {
 
+            final ArrayList<ImagePreviewItem> imagePreviewItems = new ArrayList<>();
             ClipData clipData = data.getClipData();
-            StringBuilder builder = new StringBuilder();
-            for (int i = 0; i < clipData.getItemCount(); i++) {
+            for(int i = 0; i < clipData.getItemCount(); i++){
                 ClipData.Item item = clipData.getItemAt(i);
                 Uri uri = item.getUri();
-                mUris.add(uri);
-                builder.append(i + "-")
-                        .append(getRealPathFromURI(uri))
-                        .append("\n");
-
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                    imagePreviewItems.add(new ImagePreviewItem(bitmap));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
-            mTextInput.setText(builder.toString());
-            // Sau khi get đc data thì ta upload thôi
-            uploadFiles();
+            gridAdapter = new GridViewAdapter(this, R.layout.preview_image_item_layout, imagePreviewItems);
+            gridView.setAdapter(gridAdapter);
+
+
+//            gridAdapter = new GridViewAdapter(this, R.layout.grid_item_layout, getData());
+//            gridView.setAdapter(gridAdapter);
+
+//            GridView gridview = (GridView) findViewById(R.id.uploadPreviewImage);
+//            gridview.setAdapter(new GridViewAdapter(this, data.getClipData()));
+//
+//            gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                public void onItemClick(AdapterView<?> parent, View v,
+//                                        int position, long id) {
+//                    Toast.makeText(HelloGridView.this, "" + position,
+//                            Toast.LENGTH_SHORT).show();
+//                }
+//            });
+
+//            mUris = new ArrayList<>();
+//            ClipData clipData = data.getClipData();
+//            StringBuilder builder = new StringBuilder();
+//            for (int i = 0; i < clipData.getItemCount(); i++) {
+//                ClipData.Item item = clipData.getItemAt(i);
+//                Uri uri = item.getUri();
+//                mUris.add(uri);
+//                builder.append(i + "-")
+//                        .append(getRealPathFromURI(uri))
+//                        .append("\n");
+//            }
+//            mTextInput.setText(builder.toString());
+//            uploadFiles();
         }
     }
 
     public String getRealPathFromURI(Uri uri) {
         Cursor cursor = getContentResolver().query(uri, null, null, null, null);
-        cursor.moveToFirst();
+        if (cursor != null) {
+            cursor.moveToFirst();
+        } else {
+            return "";
+        }
         String document_id = cursor.getString(0);
         document_id = document_id.substring(document_id.lastIndexOf(":") + 1);
         cursor.close();
@@ -146,7 +180,11 @@ public class UploadImagesActivity extends AppCompatActivity {
         cursor = getContentResolver().query(
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                 null, MediaStore.Images.Media._ID + " = ? ", new String[]{document_id}, null);
-        cursor.moveToFirst();
+        if (cursor != null) {
+            cursor.moveToFirst();
+        } else {
+            return "";
+        }
         String path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
         cursor.close();
 
@@ -158,10 +196,7 @@ public class UploadImagesActivity extends AppCompatActivity {
             Toast.makeText(this, "Please select some image", Toast.LENGTH_SHORT).show();
             return;
         }
-        // Hàm call api sẽ mất 1 thời gian nên mình show 1 dialog nhé.
         showProgress();
-        // Trong retrofit 2 để upload file ta sử dụng Multipart, khai báo 1 MultipartBody.Builder
-        // uploaded_file là key mà mình đã định nghĩa trong khi khởi tạo server
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(URL_UPLOAD)
@@ -174,21 +209,13 @@ public class UploadImagesActivity extends AppCompatActivity {
         for (int i = 0; i < mUris.size(); i++) {
             Uri uri = mUris.get(i);
             File file = new File(getRealPathFromURI(uri));
-            // Khởi tạo RequestBody từ những file đã được chọn
             RequestBody requestBody = RequestBody.create(
                     MediaType.parse("image/*"),
                     file);
-            // Add thêm request body vào trong builder
             builder.addFormDataPart("images[]", file.getName(), requestBody);
         }
         builder.addFormDataPart("name", "nha nghi");
         builder.addFormDataPart("user_id", String.valueOf(user.getId()));
-
-//        RequestBody requestBody = RequestBody.create(
-//                MediaType.parse("text/plain"),
-//                "nha nghi"
-//        );
-//        draBody = RequestBody.create(MediaType.parse("text/plain"), requestBody.toString(1));
 
         MultipartBody requestBody = builder.build();
         UploadService service = retrofit.create(UploadService.class);
@@ -198,7 +225,7 @@ public class UploadImagesActivity extends AppCompatActivity {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response == null || response.body() == null) {
                     mTextResult.setText("Upload images failed!");
-                    dissmissDialog();
+                    dismissDialog();
                     return;
                 }
                 try {
@@ -207,18 +234,19 @@ public class UploadImagesActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                dissmissDialog();
+                dismissDialog();
+                Toast.makeText(getApplicationContext(), String.valueOf(response.body()), Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 mTextResult.setText("Upload images failed!");
-                dissmissDialog();
+                dismissDialog();
             }
         });
     }
 
-    private void dissmissDialog() {
+    private void dismissDialog() {
         mProgressDialog.dismiss();
     }
 
@@ -235,12 +263,12 @@ public class UploadImagesActivity extends AppCompatActivity {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
             return;
 
-        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+//        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
             //If the user has denied the permission previously your code will come to this block
             //Here you can explain why you need this permission
             //Explain here why you need this permission
-        }
-        //And finally ask for the permission
+//        }
+
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
     }
 }
