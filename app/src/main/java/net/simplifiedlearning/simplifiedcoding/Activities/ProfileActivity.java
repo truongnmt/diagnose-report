@@ -1,4 +1,4 @@
-package net.simplifiedlearning.simplifiedcoding;
+package net.simplifiedlearning.simplifiedcoding.Activities;
 
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
@@ -6,6 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+
+import net.simplifiedlearning.simplifiedcoding.R;
+import net.simplifiedlearning.simplifiedcoding.Utils.SharedPrefManager;
+import net.simplifiedlearning.simplifiedcoding.Models.User;
 
 public class ProfileActivity extends AppCompatActivity {
 

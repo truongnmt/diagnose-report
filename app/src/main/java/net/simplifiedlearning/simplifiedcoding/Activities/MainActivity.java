@@ -1,4 +1,4 @@
-package net.simplifiedlearning.simplifiedcoding;
+package net.simplifiedlearning.simplifiedcoding.Activities;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -11,6 +11,12 @@ import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+
+import net.simplifiedlearning.simplifiedcoding.R;
+import net.simplifiedlearning.simplifiedcoding.Webservices.RequestHandler;
+import net.simplifiedlearning.simplifiedcoding.Utils.SharedPrefManager;
+import net.simplifiedlearning.simplifiedcoding.Utils.URLs;
+import net.simplifiedlearning.simplifiedcoding.Models.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;
