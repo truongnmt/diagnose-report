@@ -1,4 +1,4 @@
-package net.simplifiedlearning.simplifiedcoding;
+package net.simplifiedlearning.simplifiedcoding.Utils;
 
 /**
  * Created by Belal on 9/5/2017.

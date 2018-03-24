@@ -1,4 +1,4 @@
-package net.simplifiedlearning.simplifiedcoding;
+package net.simplifiedlearning.simplifiedcoding.Models;
 
 import com.google.gson.annotations.SerializedName;
 

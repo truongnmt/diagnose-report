@@ -1,4 +1,4 @@
-package net.simplifiedlearning.simplifiedcoding;
+package net.simplifiedlearning.simplifiedcoding.Adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -7,7 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
+
+import net.simplifiedlearning.simplifiedcoding.Models.ImagePreviewItem;
+import net.simplifiedlearning.simplifiedcoding.R;
+
 import java.util.ArrayList;
 
 /**
