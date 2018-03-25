@@ -4,7 +4,7 @@
   if($_SERVER['REQUEST_METHOD']=='GET'){
     if(isset($_GET['user_id'])) {
       $user_id = $_GET['user_id'];
-      $sql = "SELECT * FROM images WHERE `user_id` = $user_id;";
+      $sql = "SELECT * FROM images WHERE `user_id` = $user_id ORDER BY `id` DESC;";
       // die($sql);
       $result = mysqli_query($conn,$sql);
       $response = array();
