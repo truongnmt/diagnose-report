@@ -6,13 +6,14 @@
 
   // $upload_url = $server_ip.'/upload-image/'.$upload_path;
   //For android - localhost
-	$upload_url = 'http://10.0.2.2:8888/diagnose-report/'.$upload_path;
+	$upload_url = 'http://10.0.2.2/diagnose-report/'.$upload_path;
 
 	$response = array();
 
 	if($_SERVER['REQUEST_METHOD']=='POST'){
 		if(isset($_POST['name']) and count($_FILES['images']['name'])>0) {
 			$name = $_POST['name'];
+      $user_id = $_POST['user_id'];
 
       for($i = 0; $i < count($_FILES['images']['name']); $i ++) {
         $fileinfo = pathinfo($_FILES['images']['name'][$i]);
@@ -22,7 +23,7 @@
 
         try {
           move_uploaded_file($_FILES['images']['tmp_name'][$i],$file_path);
-          $sql = "INSERT INTO `android`.`images` (`id`, `name`, `url`) VALUES (NULL, '$name', '$file_url');";
+          $sql = "INSERT INTO `android`.`images` (`id`, `name`, `url`, `user_id`) VALUES (NULL, '$name', '$file_url', '$user_id');";
           mysqli_query($conn,$sql);
         } catch(Exception $e){
           $response['result']=false;

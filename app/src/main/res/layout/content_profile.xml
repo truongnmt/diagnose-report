@@ -3,23 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="net.simplifiedlearning.simplifiedcoding.Activities.ProfileActivity"
     tools:showIn="@layout/activity_profile">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
-
             <TableRow>
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -38,7 +35,6 @@
             </TableRow>
 
             <TableRow>
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -57,7 +53,6 @@
             </TableRow>
 
             <TableRow>
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -76,7 +71,6 @@
             </TableRow>
 
             <TableRow>
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -93,8 +87,6 @@
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
 
             </TableRow>
-
-
         </TableLayout>
 
         <Button
@@ -102,6 +94,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Logout" />
-    </LinearLayout>
 
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>

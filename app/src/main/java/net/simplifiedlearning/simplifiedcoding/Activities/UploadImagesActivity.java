@@ -253,7 +253,7 @@ public class UploadImagesActivity extends AppCompatActivity {
 
         MultipartBody requestBody = builder.build();
         ApiInterface apiInterface = ServiceGenerator.createService(ApiInterface.class);
-        Call<ResponseBody> call = apiInterface.uploadFileMultilPart(requestBody);
+        Call<ResponseBody> call = apiInterface.uploadFileMultiPart(requestBody);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
