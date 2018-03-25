@@ -2,6 +2,7 @@ package net.simplifiedlearning.simplifiedcoding.Activities;
 
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -33,6 +34,7 @@ public class ProfileActivity extends AppCompatActivity {
     private List<Image> images = new ArrayList<>();
     private RecyclerView recyclerView;
     private ImagesAdapter imagesAdapter;
+    private SwipeRefreshLayout swipeContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +80,20 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getData();
+            }
+        });
+
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
+
         recyclerView = findViewById(R.id.recyclerview);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ProfileActivity.this);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -94,16 +110,20 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Image>> call, retrofit2.Response<List<Image>> response) {
                 if(response.isSuccessful()){
+                    images.clear();
                     images.addAll(response.body());
+                    Log.e(TAG, images.toString());
                     imagesAdapter.notifyDataSetChanged();
                 } else {
                     Log.e(TAG, response.message());
                 }
+                swipeContainer.setRefreshing(false);
             }
 
             @Override
             public void onFailure(Call<List<Image>> call, Throwable t) {
                 Log.e(TAG, t.getMessage());
+                swipeContainer.setRefreshing(false);
             }
         });
     }
