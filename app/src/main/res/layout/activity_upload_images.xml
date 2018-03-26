@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="net.simplifiedlearning.simplifiedcoding.Activities.UploadImagesActivity">
+    tools:context="net.simplifiedlearning.simplifiedcoding.Activities.UploadImagesActivity"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -31,7 +33,17 @@
         android:layout_marginBottom="2dp"
         android:background="@android:color/transparent"/>
 
-    <include layout="@layout/upload_preview_image" />
+    <GridView
+        android:id="@+id/uploadPreviewImage"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:numColumns="2"
+        android:stretchMode="columnWidth"
+        app:layout_constraintTop_toBottomOf="@id/report_name"
+        app:layout_constraintBottom_toTopOf="@id/button_select_image"
+        android:layout_marginTop="16dp"
+        android:verticalSpacing="2dp"
+        android:horizontalSpacing="2dp"/>
 
     <Button
         android:id="@+id/button_select_image"

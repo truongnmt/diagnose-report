@@ -7,7 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -40,6 +43,8 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        Toolbar toolbar = findViewById(R.id.profile_toolbar);
+        setSupportActionBar(toolbar);
 
         //if the user is not logged in
         //starting the login activity
@@ -62,16 +67,6 @@ public class ProfileActivity extends AppCompatActivity {
         textViewEmail.setText(user.getEmail());
         textViewGender.setText(user.getGender());
 
-        //when the user presses logout button
-        //calling the logout method
-        findViewById(R.id.buttonLogout).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            finish();
-            SharedPrefManager.getInstance(getApplicationContext()).logout();
-            }
-        });
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,7 +88,6 @@ public class ProfileActivity extends AppCompatActivity {
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
 
-
         recyclerView = findViewById(R.id.recyclerview);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ProfileActivity.this);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -101,6 +95,25 @@ public class ProfileActivity extends AppCompatActivity {
         recyclerView.setAdapter(imagesAdapter);
 
         getData();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_profile, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.logout_btn:
+                // app icon in action bar clicked; go home
+                finish();
+                SharedPrefManager.getInstance(getApplicationContext()).logout();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void getData(){
