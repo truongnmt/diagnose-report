@@ -48,13 +48,41 @@
                 android:id="@+id/content_profile"
                 layout="@layout/content_profile" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerview"
+            <LinearLayout
+                android:layout_marginTop="6dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingStart="14dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/border_set">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_assignment_black_24px"/>
+                <TextView
+                    android:layout_marginStart="2dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Diagnoses"
+                    android:textStyle="bold"
+                    android:textColor="#202020"
+                    android:textSize="14sp"
+                    android:layout_gravity="center"
+                    android:drawablePadding="2dp"/>
+
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
 
         </LinearLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
-
 
 </RelativeLayout>

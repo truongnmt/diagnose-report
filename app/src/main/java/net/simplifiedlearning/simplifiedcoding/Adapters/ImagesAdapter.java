@@ -29,26 +29,22 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        private TextView image_id, image_name, image_result, image_user_id;
+        private TextView image_name, image_result;
         private ImageView image_url;
         public ViewHolder(View itemView) {
             super(itemView);
-            image_id = itemView.findViewById(R.id.image_id);
             image_url = itemView.findViewById(R.id.image_url);
             image_name = itemView.findViewById(R.id.image_name);
             image_result = itemView.findViewById(R.id.image_result);
-            image_user_id = itemView.findViewById(R.id.image_user_id);
         }
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Image image = images.get(position);
-        holder.image_id.setText(String.valueOf(image.getId()));
         Picasso.get().load(image.getUrl()).into(holder.image_url);
         holder.image_name.setText(image.getName());
-        holder.image_result.setText(String.valueOf(image.getResult()));
-        holder.image_user_id.setText(String.valueOf(image.getUser_id()));
+        holder.image_result.setText(String.format("Your Probable Risks: %s%%", String.valueOf(image.getResult())));
     }
 
     @Override

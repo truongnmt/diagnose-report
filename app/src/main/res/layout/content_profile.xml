@@ -29,10 +29,12 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_person_outline_black_24px"/>
             <TextView
+                android:layout_marginStart="2dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Basic Info"
                 android:textStyle="bold"
+                android:textColor="#202020"
                 android:textSize="14sp"
                 android:layout_gravity="center"
                 android:drawablePadding="2dp"/>
@@ -43,13 +45,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:paddingLeft="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp">
 
             <TextView
                 android:id="@+id/textViewUsername"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Cao Nhi"
+                android:textColor="#3C3C3C"
                 android:textSize="14sp" />
 
             <TextView
@@ -63,13 +69,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:paddingLeft="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp">
 
             <TextView
                 android:id="@+id/textViewEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="caonhibkhn@gmail.com"
+                android:textColor="#3C3C3C"
                 android:textSize="14sp" />
 
             <TextView
@@ -83,13 +93,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:paddingLeft="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp">
 
             <TextView
                 android:id="@+id/textViewGender"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Female"
+                android:textColor="#3C3C3C"
                 android:textSize="14sp" />
 
             <TextView
