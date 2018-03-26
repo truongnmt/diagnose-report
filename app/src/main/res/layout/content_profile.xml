@@ -9,21 +9,6 @@
     tools:showIn="@layout/activity_profile"
     android:background="#fff">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay"
-        android:id="@+id/profile_appbar">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/profile_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-    </android.support.design.widget.AppBarLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,14 +18,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingLeft="14dp"
-            android:paddingRight="16dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp">
+            android:paddingStart="14dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
+            android:background="@drawable/border_set">
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_person_outline_white_24px"/>
+                android:src="@drawable/ic_person_outline_black_24px"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -49,6 +36,7 @@
                 android:textSize="14sp"
                 android:layout_gravity="center"
                 android:drawablePadding="2dp"/>
+
         </LinearLayout>
 
         <LinearLayout
@@ -58,6 +46,7 @@
             android:padding="16dp">
 
             <TextView
+                android:id="@+id/textViewUsername"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Cao Nhi"
@@ -77,6 +66,7 @@
             android:padding="16dp">
 
             <TextView
+                android:id="@+id/textViewEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="caonhibkhn@gmail.com"
@@ -96,6 +86,7 @@
             android:padding="16dp">
 
             <TextView
+                android:id="@+id/textViewGender"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Female"
@@ -108,87 +99,4 @@
                 android:textSize="11sp" />
         </LinearLayout>
     </LinearLayout>
-
-    <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:orientation="vertical">-->
-
-        <!--<TableLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content">-->
-            <!--<TableRow>-->
-                <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:padding="10dp"-->
-                    <!--android:text="Id"-->
-                    <!--android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/textViewId"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:padding="10dp"-->
-                    <!--android:text="1"-->
-                    <!--android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />-->
-
-            <!--</TableRow>-->
-
-            <!--<TableRow>-->
-                <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:padding="10dp"-->
-                    <!--android:text="Username"-->
-                    <!--android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/textViewUsername"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:padding="10dp"-->
-                    <!--android:text="probelalkhan"-->
-                    <!--android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />-->
-
-            <!--</TableRow>-->
-
-            <!--<TableRow>-->
-                <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:padding="10dp"-->
-                    <!--android:text="Email"-->
-                    <!--android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/textViewEmail"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:padding="10dp"-->
-                    <!--android:text="probelalkhan@gmail.com"-->
-                    <!--android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />-->
-
-            <!--</TableRow>-->
-
-            <!--<TableRow>-->
-                <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:padding="10dp"-->
-                    <!--android:text="Gender"-->
-                    <!--android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/textViewGender"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:padding="10dp"-->
-                    <!--android:text="Male"-->
-                    <!--android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />-->
-
-            <!--</TableRow>-->
-        <!--</TableLayout>-->
-
-    <!--</LinearLayout>-->
 </android.support.constraint.ConstraintLayout>

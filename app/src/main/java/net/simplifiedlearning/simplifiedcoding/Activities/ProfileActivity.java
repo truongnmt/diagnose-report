@@ -14,7 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import net.simplifiedlearning.simplifiedcoding.Adapters.GridViewAdapter;
 import net.simplifiedlearning.simplifiedcoding.Adapters.ImagesAdapter;
 import net.simplifiedlearning.simplifiedcoding.Models.Image;
 import net.simplifiedlearning.simplifiedcoding.R;
@@ -32,7 +31,7 @@ import retrofit2.Callback;
 public class ProfileActivity extends AppCompatActivity {
 
     private static final String TAG = "ProfileActivity";
-    TextView textViewId, textViewUsername, textViewEmail, textViewGender;
+    TextView textViewUsername, textViewEmail, textViewGender;
     private User user;
     private List<Image> images = new ArrayList<>();
     private RecyclerView recyclerView;
@@ -53,7 +52,6 @@ public class ProfileActivity extends AppCompatActivity {
             startActivity(new Intent(this, LoginActivity.class));
         }
 
-        textViewId = (TextView) findViewById(R.id.textViewId);
         textViewUsername = (TextView) findViewById(R.id.textViewUsername);
         textViewEmail = (TextView) findViewById(R.id.textViewEmail);
         textViewGender = (TextView) findViewById(R.id.textViewGender);
@@ -62,7 +60,6 @@ public class ProfileActivity extends AppCompatActivity {
         user = SharedPrefManager.getInstance(this).getUser();
 
         //setting the values to the textviews
-        textViewId.setText(String.valueOf(user.getId()));
         textViewUsername.setText(user.getUsername());
         textViewEmail.setText(user.getEmail());
         textViewGender.setText(user.getGender());
