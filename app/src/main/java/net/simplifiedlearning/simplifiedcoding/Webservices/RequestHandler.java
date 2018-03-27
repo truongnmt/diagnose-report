@@ -1,4 +1,4 @@
-package net.simplifiedlearning.simplifiedcoding;
+package net.simplifiedlearning.simplifiedcoding.Webservices;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

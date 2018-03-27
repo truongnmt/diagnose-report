@@ -1,8 +1,11 @@
-package net.simplifiedlearning.simplifiedcoding;
+package net.simplifiedlearning.simplifiedcoding.Utils;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+
+import net.simplifiedlearning.simplifiedcoding.Activities.LoginActivity;
+import net.simplifiedlearning.simplifiedcoding.Models.User;
 
 /**
  * Created by Belal on 9/5/2017.
