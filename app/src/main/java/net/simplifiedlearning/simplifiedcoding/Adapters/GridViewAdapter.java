@@ -14,7 +14,7 @@ import net.simplifiedlearning.simplifiedcoding.R;
 import java.util.ArrayList;
 
 /**
- * Created by truongnm on 3/11/18.
+ * Created by nhict on 3/11/18.
  */
 
 public class GridViewAdapter extends ArrayAdapter {

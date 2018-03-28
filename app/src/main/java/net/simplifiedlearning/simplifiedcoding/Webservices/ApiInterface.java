@@ -13,7 +13,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 /**
- * Created by truongnmt on 20/03/2018.
+ * Created by nhictt on 20/03/2018.
  */
 
 public interface ApiInterface {

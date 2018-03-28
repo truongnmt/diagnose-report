@@ -3,7 +3,7 @@ package net.simplifiedlearning.simplifiedcoding.Models;
 import android.graphics.Bitmap;
 
 /**
- * Created by truongnm on 3/22/18.
+ * Created by nhict on 3/22/18.
  */
 
 public class ImagePreviewItem {
