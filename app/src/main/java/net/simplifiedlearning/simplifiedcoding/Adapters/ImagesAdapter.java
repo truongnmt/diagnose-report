@@ -16,7 +16,7 @@ import net.simplifiedlearning.simplifiedcoding.R;
 import java.util.List;
 
 /**
- * Created by truongnm on 3/24/18.
+ * Created by nhict on 3/24/18.
  */
 
 public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ViewHolder> {
