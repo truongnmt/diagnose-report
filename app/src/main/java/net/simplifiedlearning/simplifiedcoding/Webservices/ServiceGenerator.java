@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import static net.simplifiedlearning.simplifiedcoding.Utils.URLs.URL_UPLOAD;
 
 /**
- * Created by nhict on 3/23/18.
+ * Created by truongnm on 3/23/18.
  */
 
 public class ServiceGenerator {
