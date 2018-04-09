@@ -11,7 +11,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 
 import net.simplifiedlearning.simplifiedcoding.Adapters.ReportsAdapter;
 import net.simplifiedlearning.simplifiedcoding.Models.Report;
@@ -72,6 +74,21 @@ public class FragmentReports extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
         reportsAdapter = new ReportsAdapter(fragmentActivity, reports);
         recyclerView.setAdapter(reportsAdapter);
+
+        String arr[]={
+                "Type of report",
+                "Report type 1",
+                "Report type 2",
+                "Report type 3"};
+        Spinner spin = getView().findViewById(R.id.spinner1);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                getActivity(), android.R.layout.simple_spinner_item, arr
+        );
+        adapter.setDropDownViewResource(
+                android.R.layout.simple_list_item_single_choice
+        );
+        spin.setAdapter(adapter);
+
 
 //        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(reportsAdapter);
 //        mItemTouchHelper = new ItemTouchHelper(callback);

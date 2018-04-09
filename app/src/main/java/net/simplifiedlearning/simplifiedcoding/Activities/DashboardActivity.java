@@ -33,7 +33,7 @@ public class DashboardActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(DashboardActivity.this, UploadImagesActivity.class));
+                startActivity(new Intent(DashboardActivity.this, UploadReportActivity.class));
             }
         });
 

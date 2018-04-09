@@ -47,7 +47,7 @@ import retrofit2.Response;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import android.view.MenuItem;
 
-public class UploadImagesActivity extends AppCompatActivity {
+public class UploadReportActivity extends AppCompatActivity {
     public final static int PICK_IMAGE_REQUEST = 1;
     public final static int STORAGE_PERMISSION_CODE = 123;
     private ProgressDialog mProgressDialog;
@@ -262,7 +262,7 @@ public class UploadImagesActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Upload images failed!", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                Toast.makeText(UploadImagesActivity.this, "Uploaded successfully!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(UploadReportActivity.this, "Uploaded successfully!", Toast.LENGTH_SHORT).show();
                 dismissDialog();
                 finish();
             }

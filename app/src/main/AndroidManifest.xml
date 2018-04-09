@@ -29,8 +29,8 @@
             android:label="Dashboard"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Activities.UploadImagesActivity"
-            android:label="Upload diagnoses"
+            android:name=".Activities.UploadReportActivity"
+            android:label="Upload report"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>

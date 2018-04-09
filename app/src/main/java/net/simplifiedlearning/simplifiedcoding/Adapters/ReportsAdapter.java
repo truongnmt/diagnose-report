@@ -43,10 +43,11 @@ public class ReportsAdapter extends RecyclerView.Adapter<ReportsAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-//        Image image = images.get(position);
+        Report report = reports.get(position);
 //        Picasso.get().load(image.getUrl()).into(holder.image_url);
-        holder.image_name.setText(image.getName());
-        holder.image_result.setText(String.format("Your Probable Risks: %s%%", String.valueOf(image.getResult())));
+        holder.report_name.setText(report.getName());
+        holder.report_created_at.setText(report.getCreated_at());
+        holder.report_description.setText(report.getDescription());
 //        if(activate) {
 //            holder.handleView.setVisibility(View.VISIBLE);
 //            holder.handleView.animate()
