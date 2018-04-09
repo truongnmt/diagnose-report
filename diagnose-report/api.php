@@ -15,18 +15,18 @@
 
 			case 'signup':
 				//checking the parameters required are available or not
-				if(isTheseParametersAvailable(array('username','email','password','gender'))){
+				if(isTheseParametersAvailable(array('name','email','password','gender'))){
 
 					//getting the values
-					$username = $_POST['username'];
+					$name = $_POST['name'];
 					$email = $_POST['email'];
 					$password = md5($_POST['password']);
 					$gender = $_POST['gender'];
 
-					//checking if the user is already exist with this username or email
-					//as the email and username should be unique for every user
-					$stmt = $conn->prepare("SELECT id FROM users WHERE username = ? OR email = ?");
-					$stmt->bind_param("ss", $username, $email);
+					//checking if the user is already exist with this name or email
+					//as the email and name should be unique for every user
+					$stmt = $conn->prepare("SELECT id FROM users WHERE name = ? OR email = ?");
+					$stmt->bind_param("ss", $name, $email);
 					$stmt->execute();
 					$stmt->store_result();
 
@@ -38,22 +38,22 @@
 					}else{
 
 						//if user is new creating an insert query
-						$stmt = $conn->prepare("INSERT INTO users (username, email, password, gender) VALUES (?, ?, ?, ?)");
-						$stmt->bind_param("ssss", $username, $email, $password, $gender);
+						$stmt = $conn->prepare("INSERT INTO users (name, email, password, gender) VALUES (?, ?, ?, ?)");
+						$stmt->bind_param("ssss", $name, $email, $password, $gender);
 
 						//if the user is successfully added to the database
 						if($stmt->execute()){
 
 							//fetching the user back
-							$stmt = $conn->prepare("SELECT id, id, username, email, gender FROM users WHERE username = ?");
-							$stmt->bind_param("s",$username);
+							$stmt = $conn->prepare("SELECT id, id, name, email, gender FROM users WHERE name = ?");
+							$stmt->bind_param("s",$name);
 							$stmt->execute();
-							$stmt->bind_result($userid, $id, $username, $email, $gender);
+							$stmt->bind_result($userid, $id, $name, $email, $gender);
 							$stmt->fetch();
 
 							$user = array(
 								'id'=>$id,
-								'username'=>$username,
+								'name'=>$name,
 								'email'=>$email,
 								'gender'=>$gender
 							);
@@ -75,15 +75,15 @@
 			break;
 
 			case 'login':
-				//for login we need the username and password
-				if(isTheseParametersAvailable(array('username', 'password'))){
+				//for login we need the name and password
+				if(isTheseParametersAvailable(array('name', 'password'))){
 					//getting values
-					$username = $_POST['username'];
+					$name = $_POST['name'];
 					$password = md5($_POST['password']);
 
 					//creating the query
-					$stmt = $conn->prepare("SELECT id, username, email, gender FROM users WHERE username = ? AND password = ?");
-					$stmt->bind_param("ss",$username, $password);
+					$stmt = $conn->prepare("SELECT id, name, email, gender FROM users WHERE name = ? AND password = ?");
+					$stmt->bind_param("ss",$name, $password);
 
 					$stmt->execute();
 
@@ -92,12 +92,12 @@
 					//if the user exist with given credentials
 					if($stmt->num_rows > 0){
 
-						$stmt->bind_result($id, $username, $email, $gender);
+						$stmt->bind_result($id, $name, $email, $gender);
 						$stmt->fetch();
 
 						$user = array(
 							'id'=>$id,
-							'username'=>$username,
+							'name'=>$name,
 							'email'=>$email,
 							'gender'=>$gender
 						);
@@ -108,7 +108,7 @@
 					}else{
 						//if the user not found
 						$response['error'] = false;
-						$response['message'] = 'Invalid username or password';
+						$response['message'] = 'Invalid name or password';
 					}
 				}
 			break;

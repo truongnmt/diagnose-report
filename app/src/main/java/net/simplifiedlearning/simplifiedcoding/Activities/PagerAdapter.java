@@ -14,10 +14,10 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
     }
     @Override
     public Fragment getItem(int position) {
-        Fragment frag=null;
+        Fragment frag = null;
         switch (position){
             case 0:
-                frag = new FragmentEgg();
+                frag = new FragmentReports();
                 break;
             case 1:
                 frag = new FragmentProfile();
@@ -35,7 +35,7 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
         String title = "";
         switch (position){
             case 0:
-                title = "EGG";
+                title = "Reports";
                 break;
             case 1:
                 title = "Profile";

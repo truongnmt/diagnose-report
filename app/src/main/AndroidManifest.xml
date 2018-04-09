@@ -25,7 +25,7 @@
             android:name=".Activities.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Activities.ProfileActivity"
+            android:name=".Activities.DashboardActivity"
             android:label="Dashboard"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

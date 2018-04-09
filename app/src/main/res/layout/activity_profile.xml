@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="net.simplifiedlearning.simplifiedcoding.Activities.ProfileActivity">
+    tools:context="net.simplifiedlearning.simplifiedcoding.Activities.DashboardActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -34,18 +34,16 @@
         android:id="@+id/materialup.viewpager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/profile_appbar"
-        />
+        app:layout_constraintTop_toBottomOf="@id/profile_appbar" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:tint="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:srcCompat="@android:drawable/ic_input_add"
+        android:tint="@android:color/white" />
 
 </android.support.constraint.ConstraintLayout>
