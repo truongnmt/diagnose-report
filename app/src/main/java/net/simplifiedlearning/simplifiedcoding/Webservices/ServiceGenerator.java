@@ -15,7 +15,6 @@ import static net.simplifiedlearning.simplifiedcoding.Utils.URLs.URL_UPLOAD;
  */
 
 public class ServiceGenerator {
-//    private final static String BASE_API_URL = "https://ghibliapi.herokuapp.com/";
     private static Retrofit retrofit = null;
     private static Gson gson = new GsonBuilder().create();
 

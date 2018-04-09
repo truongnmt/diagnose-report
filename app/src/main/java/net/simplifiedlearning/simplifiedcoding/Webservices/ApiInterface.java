@@ -1,6 +1,7 @@
 package net.simplifiedlearning.simplifiedcoding.Webservices;
 
 import net.simplifiedlearning.simplifiedcoding.Models.Image;
+import net.simplifiedlearning.simplifiedcoding.Models.Report;
 
 import java.util.List;
 
@@ -17,11 +18,16 @@ import retrofit2.http.Query;
  */
 
 public interface ApiInterface {
-    @POST("/diagnose-report/upload.php")
+    @POST("/diagnose-report/reports.php")
     Call<ResponseBody> uploadFileMultiPart(@Body RequestBody files);
+
+    @GET("/diagnose-report/reports.php")
+    Call<List<Report>> getReports(
+            @Query("user_id") int user_id
+    );
 
     @GET("/diagnose-report/images.php")
     Call<List<Image>> getImages(
-            @Query("user_id") int user_id
+            @Query("report_id") int report_id
     );
 }

@@ -9,15 +9,12 @@ import com.google.gson.annotations.SerializedName;
 public class Image {
     @SerializedName("id")
     private int id;
-    @SerializedName("name")
-    private String name;
+    @SerializedName("report_id")
+    private int report_id;
     @SerializedName("url")
     private String url;
     @SerializedName("result")
     private int result;
-    @SerializedName("user_id")
-    private int user_id;
-
 
     public int getId() {
         return id;
@@ -27,12 +24,12 @@ public class Image {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public int getReportID() {
+        return report_id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setReportID(int report_id) {
+        this.report_id = report_id;
     }
 
     public String getUrl() {
@@ -49,13 +46,5 @@ public class Image {
 
     public void setResult(int result) {
         this.result = result;
-    }
-
-    public int getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
     }
 }
