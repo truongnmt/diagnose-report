@@ -8,6 +8,7 @@
 4. YOU ARE READYYYY!!!!
 
 ## Screen shots
-![Login](/screenshots/Screenshot_1522119015.png?raw=true "Optional Title")
-![Profile](/screenshots/Screenshot_1522119119.png?raw=true "Optional Title")
-![Upload](/screenshots/Screenshot_1522119158.png?raw=true "Optional Title")
+![Login](/screenshots/signup.png?raw=true "Optional Title")
+![Dashboard](/screenshots/dashboard.png?raw=true "Optional Title")
+![Report detail](/screenshots/report_detail.png?raw=true "Optional Title")
+![Create report](/screenshots/create_report.png?raw=true "Optional Title")
