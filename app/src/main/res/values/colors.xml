@@ -8,4 +8,7 @@
     <color name="mat800">#424242</color>
     <color name="mat900">#212121</color>
     <color name="white">#fff</color>
+    <color name="safe">#00c853</color>
+    <color name="warning">#ffd600</color>
+    <color name="danger">#d50000</color>
 </resources>

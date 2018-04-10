@@ -45,10 +45,11 @@
                             android:src="@drawable/ic_assignment_black_24px"/>
 
                         <TextView
+                            android:id="@+id/report_number"
                             android:layout_marginStart="2dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Total 19 reports"
+                            android:text="Reports"
                             android:textStyle="bold"
                             android:textColor="#202020"
                             android:textSize="14sp"

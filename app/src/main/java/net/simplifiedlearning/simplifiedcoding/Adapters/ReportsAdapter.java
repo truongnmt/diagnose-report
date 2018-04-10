@@ -1,12 +1,14 @@
 package net.simplifiedlearning.simplifiedcoding.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import net.simplifiedlearning.simplifiedcoding.Activities.ReportDetail;
 import net.simplifiedlearning.simplifiedcoding.Models.Report;
 import net.simplifiedlearning.simplifiedcoding.R;
 import java.util.List;
@@ -44,99 +46,32 @@ public class ReportsAdapter extends RecyclerView.Adapter<ReportsAdapter.ViewHold
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Report report = reports.get(position);
-//        Picasso.get().load(image.getUrl()).into(holder.image_url);
         holder.report_name.setText(report.getName());
         holder.report_created_at.setText(report.getCreated_at());
         holder.report_description.setText(report.getDescription());
-//        if(activate) {
-//            holder.handleView.setVisibility(View.VISIBLE);
-//            holder.handleView.animate()
-//                    .translationX(0)
-//                    .alpha(1.0f)
-//                    .setDuration(100)
-//                    .setListener(new AnimatorListenerAdapter() {
-//                        @Override
-//                        public void onAnimationEnd(Animator animation) {
-//                            super.onAnimationEnd(animation);
-//                        }
-//                    });
-//        } else {
-//            holder.handleView.animate()
-//                    .translationX(holder.handleView.getWidth())
-//                    .alpha(0.0f)
-//                    .setDuration(100)
-//                    .setListener(new AnimatorListenerAdapter() {
-//                        @Override
-//                        public void onAnimationEnd(Animator animation) {
-//                            super.onAnimationEnd(animation);
-//                            holder.handleView.setVisibility(View.INVISIBLE);
-//                        }
-//                    });
-//        }
-//
-//        // Start a drag whenever the handle view is touched
-//        holder.handleView.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
-//                    mDragStartListener.onStartDrag(holder);
-//                }
-//                return false;
-//            }
-//        });
-    }
 
-//    @Override
-//    public void onItemDismiss(int position) {
-//        images.remove(position);
-//        notifyItemRemoved(position);
-//    }
-//
-//    @Override
-//    public boolean onItemMove(int fromPosition, int toPosition) {
-//        Collections.swap(images, fromPosition, toPosition);
-//        notifyItemMoved(fromPosition, toPosition);
-//        return true;
-//    }
+        final View view = holder.itemView;
+        final Report report_tmp = report;
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext() , ReportDetail.class);
+                intent.putExtra("id", report_tmp.getId());
+                intent.putExtra("name", report_tmp.getName());
+                intent.putExtra("description", report_tmp.getDescription());
+                intent.putExtra("patient_name", report_tmp.getPatient_name());
+                intent.putExtra("patient_age", report_tmp.getPatient_age());
+                intent.putExtra("patient_height", report_tmp.getPatient_height());
+                intent.putExtra("patient_weight", report_tmp.getPatient_weight());
+                intent.putExtra("created_at", report_tmp.getCreated_at());
+                intent.putExtra("general_result", report_tmp.getGeneral_result());
+                view.getContext().startActivity(intent);
+            }
+        });
+    }
 
     @Override
     public int getItemCount() {
         return reports.size();
     }
-
-//    public List<Image> getList() {
-//        return this.images;
-//    }
-
-
-//    /**
-//     * Simple example of a view holder that implements {@link ItemTouchHelperViewHolder} and has a
-//     * "handle" view that initiates a drag event when touched.
-//     */
-//    public static class ItemViewHolder extends RecyclerView.ViewHolder implements
-//            ItemTouchHelperViewHolder {
-//
-//        public final TextView image_name, image_result;
-//        public final ImageView image_url;
-//        public final ImageView handleView;
-//
-//        public ItemViewHolder(View itemView) {
-//            super(itemView);
-//            image_url = itemView.findViewById(R.id.image_url);
-//            image_name = itemView.findViewById(R.id.image_name);
-//            image_result = itemView.findViewById(R.id.image_result);
-//            handleView = itemView.findViewById(R.id.handle);
-//        }
-//
-//        @Override
-//        public void onItemSelected() {
-//            itemView.setBackgroundColor(Color.LTGRAY);
-//        }
-//
-//        @Override
-//        public void onItemClear() {
-//            itemView.setBackgroundColor(0);
-//        }
-//    }
-
 }

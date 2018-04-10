@@ -3,7 +3,7 @@
     package="net.simplifiedlearning.simplifiedcoding">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -31,7 +31,10 @@
         <activity
             android:name=".Activities.UploadReportActivity"
             android:label="Upload report"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".Activities.ReportDetail"
+            android:label="Report detail">
         </activity>
     </application>
 

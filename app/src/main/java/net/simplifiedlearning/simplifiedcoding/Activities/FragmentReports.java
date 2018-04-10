@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import net.simplifiedlearning.simplifiedcoding.Adapters.ReportsAdapter;
 import net.simplifiedlearning.simplifiedcoding.Models.Report;
@@ -89,28 +90,9 @@ public class FragmentReports extends Fragment {
         );
         spin.setAdapter(adapter);
 
-
-//        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(reportsAdapter);
-//        mItemTouchHelper = new ItemTouchHelper(callback);
-//        mItemTouchHelper.attachToRecyclerView(recyclerView);
-
         user = SharedPrefManager.getInstance(fragmentActivity).getUser();
 
         getData();
-
-//        final ImageButton editButton = getView().findViewById(R.id.editButton);
-//        editButton.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View v) {
-//                if (v.getId() == R.id.editButton) {
-//                    isEditClicked = !isEditClicked;
-//                    editButton.setBackgroundResource(isEditClicked ? R.color.mat100 : R.color.white);
-//                    editButton.setColorFilter(isEditClicked ?
-//                            Color.argb(255, 117, 117, 117) : R.color.mat900);
-//                    reportsAdapter.editMode(isEditClicked);
-//                }
-//            }
-//        });
 
         final ImageButton refreshButton = getView().findViewById(R.id.refreshButton);
         refreshButton.setOnClickListener(new View.OnClickListener(){
@@ -136,6 +118,8 @@ public class FragmentReports extends Fragment {
                     reports.addAll(response.body());
                     Log.e(TAG, reports.toString());
                     reportsAdapter.notifyDataSetChanged();
+                    TextView reportNumber = getView().findViewById(R.id.report_number);
+                    reportNumber.setText(new StringBuilder().append("Total ").append(reports.size()).append(" reports").toString());
                 } else {
                     Log.e(TAG, response.message());
                 }
@@ -151,17 +135,4 @@ public class FragmentReports extends Fragment {
             }
         });
     }
-
-//    @Override
-//    public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
-//        mItemTouchHelper.startDrag(viewHolder);
-//
-//        Map<Integer,Integer> itemPosition = new HashMap<>();
-//        List<Image> list = reportsAdapter.getList();
-//        for(int i=0; i<list.size(); i++) {
-//            itemPosition.put(i, list.get(i).getId());
-//        }
-//    }
-
-
 }
