@@ -21,7 +21,7 @@
         $temp['patient_age']=$row['patient_age'];
         $temp['patient_height']=$row['patient_height'];
         $temp['patient_weight']=$row['patient_weight'];
-        $temp['result']=$row['result'];
+        $temp['general_result']=$row['general_result'];
         $temp['created_at']=$row['created_at'];
         array_push($response, $temp);
       }
@@ -42,7 +42,7 @@
         $temp['patient_age']=$row['patient_age'];
         $temp['patient_height']=$row['patient_height'];
         $temp['patient_weight']=$row['patient_weight'];
-        $temp['result']=$row['result'];
+        $temp['general_result']=$row['general_result'];
         $temp['created_at']=$row['created_at'];
       	array_push($response, $temp);
       }
