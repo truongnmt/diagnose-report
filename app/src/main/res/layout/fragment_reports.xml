@@ -79,8 +79,6 @@
                     android:paddingEnd="16dp" />
 
             </LinearLayout>
-            
-
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerview"

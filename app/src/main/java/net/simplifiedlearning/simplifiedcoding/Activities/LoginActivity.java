@@ -105,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
                         //creating a new user object
                         User user = new User(
                                 userJson.getInt("id"),
-                                userJson.getString("username"),
+                                userJson.getString("name"),
                                 userJson.getString("email"),
                                 userJson.getString("gender")
                         );
@@ -131,7 +131,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 //creating request parameters
                 HashMap<String, String> params = new HashMap<>();
-                params.put("username", username);
+                params.put("name", username);
                 params.put("password", password);
 
                 //returing the response

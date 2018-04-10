@@ -47,30 +47,38 @@ import retrofit2.Response;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import android.view.MenuItem;
 
+import com.example.ExpandableHeightGridView;
+
 public class UploadReportActivity extends AppCompatActivity {
     public final static int PICK_IMAGE_REQUEST = 1;
     public final static int STORAGE_PERMISSION_CODE = 123;
     private ProgressDialog mProgressDialog;
     private List<Uri> mUris = new ArrayList<>();
     private User user;
-    private GridView gridView;
+    private ExpandableHeightGridView gridView;
     private ClipData chosenIntentData;
     private Uri chosenDataUri;
-    private EditText reportName;
+    private EditText reportName, reportDescription, reportPatientName, reportPatientHeight, reportPatientWeight, reportPatientAge;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_upload_images);
+        setContentView(R.layout.activity_upload_report);
         requestStoragePermission();
         user = SharedPrefManager.getInstance(this).getUser();
 
         gridView =  findViewById(R.id.uploadPreviewImage);
+        gridView.setExpanded(true);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         reportName = findViewById(R.id.report_name);
+        reportDescription = findViewById(R.id.report_description);
+        reportPatientName = findViewById(R.id.report_patient_name);
+        reportPatientAge = findViewById(R.id.report_patient_age);
+        reportPatientHeight = findViewById(R.id.report_patient_height);
+        reportPatientWeight = findViewById(R.id.report_patient_weight);
     }
 
     @Override
@@ -80,25 +88,25 @@ public class UploadReportActivity extends AppCompatActivity {
                 // app icon in action bar clicked; go home
                 finish();
                 return true;
-            case R.id.upload_images_btn:
-                uploadFiles();
-                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_upload, menu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.menu_upload, menu);
+//        return true;
+//    }
 
     public void onClickBtn(View view)
     {
         switch (view.getId()) {
             case R.id.button_select_image:
                 requestPermissionAndPickImage();
+                break;
+            case R.id.upload_report_btn:
+                uploadFiles();
                 break;
             default:
                 break;
@@ -208,9 +216,15 @@ public class UploadReportActivity extends AppCompatActivity {
     }
 
     public void uploadFiles() {
-        String report = reportName.getText().toString();
-        if (report.isEmpty()){
-            Toast.makeText(this, "Please type a name for this report", Toast.LENGTH_SHORT).show();
+        String name = reportName.getText().toString();
+        String description = reportDescription.getText().toString();
+        String patientName = reportPatientName.getText().toString();
+        String patientAge = reportPatientAge.getText().toString();
+        String patientHeight = reportPatientHeight.getText().toString();
+        String patientWeight = reportPatientWeight.getText().toString();
+        if (name.isEmpty() || description.isEmpty() || patientName.isEmpty() || patientAge.isEmpty() ||
+                patientHeight.isEmpty() || patientWeight.isEmpty()){
+            Toast.makeText(this, "All fields are required!", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -248,8 +262,13 @@ public class UploadReportActivity extends AppCompatActivity {
                     file);
             builder.addFormDataPart("images[]", file.getName(), requestBody);
         }
-        builder.addFormDataPart("name", report);
         builder.addFormDataPart("user_id", String.valueOf(user.getId()));
+        builder.addFormDataPart("name", name);
+        builder.addFormDataPart("description", description);
+        builder.addFormDataPart("patient_name", patientName);
+        builder.addFormDataPart("patient_age", patientAge);
+        builder.addFormDataPart("patient_height", patientHeight);
+        builder.addFormDataPart("patient_weight", patientWeight);
 
         MultipartBody requestBody = builder.build();
         ApiInterface apiInterface = ServiceGenerator.createService(ApiInterface.class);
