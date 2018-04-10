@@ -64,17 +64,25 @@
                     android:background="@drawable/border_box"
                     android:text="Attached photos"/>
 
-                <com.example.ExpandableHeightGridView
+                <android.support.v7.widget.RecyclerView
                     android:id="@+id/uploadPreviewImage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/border_box"
-                    android:numColumns="3"
-                    android:stretchMode="columnWidth"
-                    android:layout_marginTop="-2dp"
-                    android:verticalSpacing="2dp"
-                    android:horizontalSpacing="2dp"
-                    android:isScrollContainer="false"/>
+                    android:padding="2dp"
+                    tools:listitem="@layout/preview_image_item_layout"/>
+
+                <!--<com.example.ExpandableHeightGridView-->
+                    <!--android:id="@+id/uploadPreviewImage"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:background="@drawable/border_box"-->
+                    <!--android:numColumns="3"-->
+                    <!--android:stretchMode="columnWidth"-->
+                    <!--android:layout_marginTop="-2dp"-->
+                    <!--android:verticalSpacing="2dp"-->
+                    <!--android:horizontalSpacing="2dp"-->
+                    <!--android:isScrollContainer="false"/>-->
 
             </LinearLayout>
 

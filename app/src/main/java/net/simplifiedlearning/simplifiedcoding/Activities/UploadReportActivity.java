@@ -16,7 +16,10 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -25,12 +28,15 @@ import android.widget.GridView;
 import android.widget.Toast;
 
 import net.simplifiedlearning.simplifiedcoding.Adapters.GridViewAdapter;
+import net.simplifiedlearning.simplifiedcoding.Adapters.RecyclerListAdapter;
 import net.simplifiedlearning.simplifiedcoding.Models.ImagePreviewItem;
 import net.simplifiedlearning.simplifiedcoding.R;
 import net.simplifiedlearning.simplifiedcoding.Utils.SharedPrefManager;
 import net.simplifiedlearning.simplifiedcoding.Models.User;
 import net.simplifiedlearning.simplifiedcoding.Webservices.ApiInterface;
 import net.simplifiedlearning.simplifiedcoding.Webservices.ServiceGenerator;
+import net.simplifiedlearning.simplifiedcoding.helper.OnStartDragListener;
+import net.simplifiedlearning.simplifiedcoding.helper.SimpleItemTouchHelperCallback;
 
 import java.io.File;
 import java.io.IOException;
@@ -49,16 +55,18 @@ import android.view.MenuItem;
 
 import com.example.ExpandableHeightGridView;
 
-public class UploadReportActivity extends AppCompatActivity {
+public class UploadReportActivity extends AppCompatActivity implements OnStartDragListener {
     public final static int PICK_IMAGE_REQUEST = 1;
     public final static int STORAGE_PERMISSION_CODE = 123;
     private ProgressDialog mProgressDialog;
     private List<Uri> mUris = new ArrayList<>();
     private User user;
-    private ExpandableHeightGridView gridView;
     private ClipData chosenIntentData;
     private Uri chosenDataUri;
     private EditText reportName, reportDescription, reportPatientName, reportPatientHeight, reportPatientWeight, reportPatientAge;
+    private ItemTouchHelper mItemTouchHelper;
+    private RecyclerListAdapter adapter;
+    private ArrayList<ImagePreviewItem> imagePreviewItems = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +75,6 @@ public class UploadReportActivity extends AppCompatActivity {
         requestStoragePermission();
         user = SharedPrefManager.getInstance(this).getUser();
 
-        gridView =  findViewById(R.id.uploadPreviewImage);
-        gridView.setExpanded(true);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -79,6 +85,19 @@ public class UploadReportActivity extends AppCompatActivity {
         reportPatientAge = findViewById(R.id.report_patient_age);
         reportPatientHeight = findViewById(R.id.report_patient_height);
         reportPatientWeight = findViewById(R.id.report_patient_weight);
+
+        adapter = new RecyclerListAdapter(this, this, imagePreviewItems);
+        RecyclerView recyclerView = findViewById(R.id.uploadPreviewImage);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(adapter);
+
+        final int spanCount = 3;
+        final GridLayoutManager layoutManager = new GridLayoutManager(this, spanCount);
+        recyclerView.setLayoutManager(layoutManager);
+
+        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(adapter);
+        mItemTouchHelper = new ItemTouchHelper(callback);
+        mItemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
     @Override
@@ -157,7 +176,7 @@ public class UploadReportActivity extends AppCompatActivity {
             chosenDataUri = null;
             chosenIntentData = data.getClipData();
 
-            final ArrayList<ImagePreviewItem> imagePreviewItems = new ArrayList<>();
+            imagePreviewItems.clear();
             ClipData clipData = data.getClipData();
             for(int i = 0; i < clipData.getItemCount(); i++){
                 ClipData.Item item = clipData.getItemAt(i);
@@ -169,24 +188,26 @@ public class UploadReportActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
+            adapter.notifyDataSetChanged();
 
-            GridViewAdapter gridAdapter = new GridViewAdapter(this, R.layout.preview_image_item_layout, imagePreviewItems);
-            gridView.setAdapter(gridAdapter);
+//            GridViewAdapter gridAdapter = new GridViewAdapter(this, R.layout.preview_image_item_layout, imagePreviewItems);
+//            gridView.setAdapter(gridAdapter);
         } else if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null &&
                 data.getData() != null) {
             chosenIntentData = null;
             chosenDataUri = data.getData();
 
-            final ArrayList<ImagePreviewItem> imagePreviewItems = new ArrayList<>();
+            imagePreviewItems.clear();
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), chosenDataUri);
                 imagePreviewItems.add(new ImagePreviewItem(bitmap));
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            adapter.notifyDataSetChanged();
 
-            GridViewAdapter gridAdapter = new GridViewAdapter(this, R.layout.preview_image_item_layout, imagePreviewItems);
-            gridView.setAdapter(gridAdapter);
+//            GridViewAdapter gridAdapter = new GridViewAdapter(this, R.layout.preview_image_item_layout, imagePreviewItems);
+//            gridView.setAdapter(gridAdapter);
         }
     }
 
@@ -319,5 +340,10 @@ public class UploadReportActivity extends AppCompatActivity {
 //        }
 
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
+    }
+
+    @Override
+    public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
+        mItemTouchHelper.startDrag(viewHolder);
     }
 }
