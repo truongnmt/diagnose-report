@@ -18,15 +18,15 @@ import retrofit2.http.Query;
  */
 
 public interface ApiInterface {
-    @POST("/diagnose-report/reports.php")
+    @POST("/reports.php")
     Call<ResponseBody> uploadFileMultiPart(@Body RequestBody files);
 
-    @GET("/diagnose-report/reports.php")
+    @GET("/reports.php")
     Call<List<Report>> getReports(
             @Query("user_id") int user_id
     );
 
-    @GET("/diagnose-report/images.php")
+    @GET("/images.php")
     Call<List<Image>> getImages(
             @Query("report_id") int report_id
     );
