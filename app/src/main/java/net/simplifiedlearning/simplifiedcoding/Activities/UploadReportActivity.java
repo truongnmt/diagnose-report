@@ -23,8 +23,10 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import net.simplifiedlearning.simplifiedcoding.Adapters.GridViewAdapter;
@@ -98,6 +100,20 @@ public class UploadReportActivity extends AppCompatActivity implements OnStartDr
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(adapter);
         mItemTouchHelper = new ItemTouchHelper(callback);
         mItemTouchHelper.attachToRecyclerView(recyclerView);
+
+        String arr[]={
+                "Type of report",
+                "Report type 1",
+                "Report type 2",
+                "Report type 3"};
+        Spinner spin = findViewById(R.id.spinner2);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                this, android.R.layout.simple_spinner_item, arr
+        );
+        adapter.setDropDownViewResource(
+                android.R.layout.simple_list_item_single_choice
+        );
+        spin.setAdapter(adapter);
     }
 
     @Override

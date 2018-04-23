@@ -9,8 +9,10 @@ import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Query;
 
 /**
@@ -25,6 +27,12 @@ public interface ApiInterface {
     Call<List<Report>> getReports(
             @Query("user_id") int user_id
     );
+
+    @POST("/reports.php")
+    Call<ResponseBody> updateReport(@Body RequestBody report);
+
+    @POST("/reports.php")
+    Call<ResponseBody> deleteReport(@Body RequestBody report);
 
     @GET("/images.php")
     Call<List<Image>> getImages(

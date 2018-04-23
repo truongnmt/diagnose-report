@@ -31,11 +31,14 @@
         <activity
             android:name=".Activities.UploadReportActivity"
             android:label="Upload report"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activities.ReportDetail"
-            android:label="Report detail">
-        </activity>
+            android:label="Report detail"></activity>
+        <activity
+            android:name=".Activities.ReportEdit"
+            android:label="Edit report"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

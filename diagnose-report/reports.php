@@ -50,7 +50,58 @@
       echo json_encode($response);
     }
 
+  } else if($_SERVER['REQUEST_METHOD']=='POST' && isset($_POST['apicall'])){
+      // reports#patch
+      if($_POST['apicall'] == 'patch') {
+        $report_id = $_POST['report_id'];
+        $name = $_POST['name'];
+        $description = $_POST['description'];
+        $patient_name = $_POST['patient_name'];
+        $patient_age = $_POST['patient_age'];
+        $patient_height = $_POST['patient_height'];
+        $patient_weight = $_POST['patient_weight'];
+        $sql = "UPDATE `reports` SET `name` = '$name',
+          `description` = '$description',
+          `patient_name` = '$patient_name',
+          `patient_age` = '$patient_age',
+          `patient_height` = '$patient_height',
+          `patient_weight` = '$patient_weight' WHERE `reports`.`id` = $report_id;";
+        echo $sql;
+        if(mysqli_query($conn,$sql)) {
+          $response['result'] = true;
+          $response['message'] = "Report update successfully";
 
+          echo json_encode($response);
+          mysqli_close($conn);
+          return;
+        } else {
+          $response['result'] = false;
+          $response['message'] = mysqli_error($conn);
+
+          echo json_encode($response);
+          mysqli_close($conn);
+          return;
+        }
+      } else if($_POST['apicall'] == 'delete') {
+      // reports#delete
+      $report_id = $_POST['report_id'];
+      $sql = "DELETE FROM `reports` WHERE `reports`.`id` = $report_id;";
+      if(mysqli_query($conn,$sql)) {
+        $response['result'] = true;
+        $result = "Report deleted successfully!";
+
+        echo json_encode($response);
+        mysqli_close($conn);
+        return;
+      } else {
+        $response['result'] = false;
+        $response['message'] = mysqli_error($conn) . $sql;
+
+        echo json_encode($response);
+        mysqli_close($conn);
+        return;
+      }
+    }
   } else if($_SERVER['REQUEST_METHOD']=='POST'){
     // reports#create
     $user_id = $_POST['user_id'];
