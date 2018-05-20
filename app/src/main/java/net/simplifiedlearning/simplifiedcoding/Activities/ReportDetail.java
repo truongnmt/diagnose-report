@@ -72,10 +72,10 @@ public class ReportDetail extends AppCompatActivity {
             }
             else {
                 TextView generalResult = findViewById(R.id.show_report_general_result);
-                if (Float.compare(general_result, 70) == 1)
-                    generalResult.setTextColor(ContextCompat.getColor(this, R.color.safe));
-                else
+                if (Float.compare(general_result, 50) == 1)
                     generalResult.setTextColor(ContextCompat.getColor(this, R.color.danger));
+                else
+                    generalResult.setTextColor(ContextCompat.getColor(this, R.color.safe));
                 generalResult.setText(String.valueOf(general_result + "%"));
             }
 

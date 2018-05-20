@@ -34,7 +34,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ViewHolder
         public ViewHolder(View itemView) {
             super(itemView);
             report_image_item = itemView.findViewById(R.id.report_image_item);
-            report_image_result = itemView.findViewById(R.id.report_image_result);
+//            report_image_result = itemView.findViewById(R.id.report_image_result);
         }
     }
 
@@ -49,21 +49,21 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ViewHolder
     public void onBindViewHolder(ViewHolder holder, int position) {
         Image image = images.get(position);
         Picasso.get().load(image.getUrl()).into(holder.report_image_item);
-        int result = image.getResult();
-        if (result == -1) {
-            // khong co du lieu
-            holder.report_image_result.setImageResource(R.drawable.ic_help_black_24dp);
-            holder.report_image_result.setColorFilter(context.getResources().getColor(R.color.warning)); // yellow
-        }
-        else {
-            if (result == 1) {
-                // khong co benh
-                holder.report_image_result.setImageResource(R.drawable.ic_assignment_turned_in_black_24dp);
-                holder.report_image_result.setColorFilter(context.getResources().getColor(R.color.safe)); // green
-            } else {
-                holder.report_image_result.setImageResource(R.drawable.ic_warning_black_24dp);
-                holder.report_image_result.setColorFilter(context.getResources().getColor(R.color.danger)); // red
-            }
+//        int result = image.getResult();
+//        if (result == -1) {
+//            // khong co du lieu
+//            holder.report_image_result.setImageResource(R.drawable.ic_help_black_24dp);
+//            holder.report_image_result.setColorFilter(context.getResources().getColor(R.color.warning)); // yellow
+//        }
+//        else {
+//            if (result == 1) {
+//                // khong co benh
+//                holder.report_image_result.setImageResource(R.drawable.ic_assignment_turned_in_black_24dp);
+//                holder.report_image_result.setColorFilter(context.getResources().getColor(R.color.safe)); // green
+//            } else {
+//                holder.report_image_result.setImageResource(R.drawable.ic_warning_black_24dp);
+//                holder.report_image_result.setColorFilter(context.getResources().getColor(R.color.danger)); // red
+//            }
 
 //            TextView generalResult = findViewById(R.id.show_report_general_result);
 //            if (Float.compare(general_result, 70) == 1)
@@ -71,7 +71,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ViewHolder
 //            else
 //                generalResult.setTextColor(ContextCompat.getColor(this, R.color.danger));
 //            generalResult.setText(String.valueOf(general_result + "%"));
-        }
+//        }
     }
 
     @Override

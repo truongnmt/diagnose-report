@@ -3,6 +3,8 @@ package net.simplifiedlearning.simplifiedcoding.Webservices;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.concurrent.TimeUnit;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -20,7 +22,9 @@ public class ServiceGenerator {
 
     private static HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
     private static OkHttpClient.Builder okHttpClientBuilder = new OkHttpClient.Builder()
-            .addInterceptor(httpLoggingInterceptor);
+            .addInterceptor(httpLoggingInterceptor)
+            .readTimeout(120, TimeUnit.SECONDS)
+            .connectTimeout(120, TimeUnit.SECONDS);
 
     private static OkHttpClient okHttpClient = okHttpClientBuilder.build();
 

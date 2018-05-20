@@ -8,21 +8,20 @@
 
     <ImageView
         android:id="@+id/report_image_item"
-        android:scaleType="centerCrop"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintDimensionRatio="1:1"/>
 
-    <ImageView
-        android:id="@+id/report_image_result"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:padding="3dp"
-        android:tint="@color/warning"
-        android:src="@drawable/ic_help_black_24dp"/>
+    <!--<ImageView-->
+        <!--android:id="@+id/report_image_result"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--android:padding="3dp"-->
+        <!--android:tint="@color/warning"-->
+        <!--android:src="@drawable/ic_help_black_24dp"/>-->
 
 </android.support.constraint.ConstraintLayout>
